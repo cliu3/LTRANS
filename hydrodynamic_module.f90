@@ -300,40 +300,60 @@ CONTAINS
     if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
 
       ! s-coordinate on rho grid (sc_r)
-      STATUS = NF90_INQ_VARID(NCID,'s_rho',VID)
+      !STATUS = NF90_INQ_VARID(NCID,'s_rho',VID)
+      status = nf90_inquire_attribute(ncid, nf90_global, "s_rho")
       IF(STATUS /= NF90_NOERR)THEN
-        STATUS = NF90_INQ_VARID(NCID,'sc_r',VID)
+        !STATUS = NF90_INQ_VARID(NCID,'sc_r',VID)
+        status = nf90_inquire_attribute(ncid, nf90_global, "sc_r")
         if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem finding SC'
         if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+        status = nf90_get_att(ncid, nf90_global, "sc_r", SC)
+        if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read SC'
+        if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      ELSE
+        !STATUS = NF90_GET_VAR(NCID,VID,SC)
+        status = nf90_get_att(ncid, nf90_global, "s_rho", SC)
+        if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read SC'
+        if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
       ENDIF
-      STATUS = NF90_GET_VAR(NCID,VID,SC)
-      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read SC'
-      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      !print*, SC
+
 
       ! Cs value on rho grid (Cs_r)
-      STATUS = NF90_INQ_VARID(NCID,'Cs_r',VID)
+      !STATUS = NF90_INQ_VARID(NCID,'Cs_r',VID)
+      status = nf90_inquire_attribute(ncid, nf90_global, "Cs_r")
       if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem find CS'
       if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
-      STATUS = NF90_GET_VAR(NCID,VID,CS)
+      !STATUS = NF90_GET_VAR(NCID,VID,CS)
+      status = nf90_get_att(ncid, nf90_global, "Cs_r", CS)
       if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read CS'
       if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
 
       ! s-coordinate on w grid (sc_w)
-      STATUS = NF90_INQ_VARID(NCID,'s_w',VID)
+      !STATUS = NF90_INQ_VARID(NCID,'s_w',VID)
+      status = nf90_inquire_attribute(ncid, nf90_global, "s_w")
       IF(STATUS /= NF90_NOERR)THEN
-        STATUS = NF90_INQ_VARID(NCID,'sc_w',VID)
+        !STATUS = NF90_INQ_VARID(NCID,'sc_w',VID)
+        status = nf90_inquire_attribute(ncid, nf90_global, "sc_w")
         if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem finding SCW'
         if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+        status = nf90_get_att(ncid, nf90_global, "sc_w", SCW)
+        if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read SCW'
+        if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      ELSE
+        !STATUS = NF90_GET_VAR(NCID,VID,SCW)
+        status = nf90_get_att(ncid, nf90_global, "s_w", SCW)
+        if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read SCW'
+        if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
       ENDIF
-      STATUS = NF90_GET_VAR(NCID,VID,SCW)
-      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read SCW'
-      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
 
       ! Cs value on w grid (Cs_w)
-      STATUS = NF90_INQ_VARID(NCID,'Cs_w',VID)
+      !STATUS = NF90_INQ_VARID(NCID,'Cs_w',VID)
+      status = nf90_inquire_attribute(ncid, nf90_global, "Cs_w")
       if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem find CSW'
       if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
-      STATUS = NF90_GET_VAR(NCID,VID,CSW)
+      !STATUS = NF90_GET_VAR(NCID,VID,CSW)
+      status = nf90_get_att(ncid, nf90_global, "Cs_w", CSW)
       if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem read CSW'
       if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
 
