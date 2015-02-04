@@ -681,7 +681,7 @@ CONTAINS
   SUBROUTINE initHydro()
     !This Subroutine reads in the hydrodynamic information for the first 
     !  iteration
-    USE PARAM_MOD, ONLY: numpar,ui,vi,uj,vj,us,ws,rho_nodes,u_nodes,v_nodes,   &
+    USE PARAM_MOD, ONLY: numpar,ui,vi,uj,vj,us,ws,tdim,rho_nodes,u_nodes,v_nodes,   &
         prefix,suffix,filenum,numdigits,readZeta,constZeta,readSalt,constSalt, &
         readTemp,constTemp,readDens,constDens,readU,constU,readV,constV,readW, &
         constW,readAks,constAks
@@ -770,6 +770,13 @@ CONTAINS
       STATUS = NF90_OPEN(TRIM(filenm), NF90_NOWRITE, NCID)
       if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem NF90_OPEN'
       if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      STATUS = NF_INQ_UNLIMDIM(NCID, VID)
+      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem finding unlimited dimension'
+      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      status = nf90_inquire_dimension(ncid, VID, len = tdim)
+      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem finding length of unlimited dimension'
+      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      !print*,'tdim',tdim
 !       write(*,*) 'ncid = ', ncid
 
       if(readZeta)then  
@@ -1104,6 +1111,7 @@ CONTAINS
 
     !if the current input file is not yet finished, just increment stepf to 
     !  the next time step
+    !print*,'tdim',tdim
     IF ( (startfile .AND. (iint==0) .AND. (stepf==tdim)) .OR.   &
          (stepf .LT. tdim)                                      ) THEN
 
@@ -1143,6 +1151,18 @@ CONTAINS
       write(*,*) TRIM(filenm)
 
       stepf = 1
+
+      ! find out length of unlimited dimension
+      STATUS = NF90_OPEN(TRIM(filenm), NF90_NOWRITE, NCID)
+      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem NF90_OPEN'
+      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      STATUS = NF_INQ_UNLIMDIM(NCID, VID)
+      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem finding unlimited dimension'
+      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      status = nf90_inquire_dimension(ncid, VID, len = tdim)
+      if (STATUS .NE. NF90_NOERR) write(*,*) 'Problem finding length of unlimited dimension'
+      if (STATUS .NE. NF90_NOERR) write(*,*) NF90_STRERROR(STATUS)
+      !print*,'tdim',tdim
 
     ENDIF
 
