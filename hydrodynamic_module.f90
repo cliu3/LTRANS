@@ -1112,8 +1112,8 @@ CONTAINS
     !if the current input file is not yet finished, just increment stepf to 
     !  the next time step
     !print*,'tdim',tdim
-    IF ( (startfile .AND. (iint==0) .AND. (stepf==tdim)) .OR.   &
-         (stepf .LT. tdim)                                      ) THEN
+    IF ( (startfile .AND. (iint==0) .AND. (stepf==tdim-1)) .OR.   &
+         (stepf .LT. tdim-1)                                      ) THEN
 
       stepf=stepf+1
 
