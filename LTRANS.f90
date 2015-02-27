@@ -545,7 +545,7 @@ contains
   
 
   subroutine run_External_Timestep()
-    use param_mod, only: dt,idt,WriteModelTiming
+    use param_mod, only: dt,idt,lt_start,WriteModelTiming
     use hydro_mod, only: updateHydro
     integer :: stepIT
     real :: before,after
@@ -553,6 +553,15 @@ contains
       stepIT  = int(dt/idt)                     !number of internal time steps
 
       IF(WriteModelTiming) call CPU_TIME(before)
+
+      !Prepare external time step values to be used for 
+      !  calculating Advection and Turbulence
+      ex=0.0
+      ex(1) = (p-2)*dt
+      ex(2) = (p-1)*dt
+      ex(3) = p*dt
+
+      if (ex(3)+dt .LT. lt_start) RETURN
 
       !Read in hydrodynamic model data 
       IF(p > 2) CALL updateHydro()   !do not start updating until 3rd iteration
@@ -562,12 +571,7 @@ contains
         timeCounts(1) = timeCounts(1) + (after-before)
       ENDIF
 
-      !Prepare external time step values to be used for 
-      !  calculating Advection and Turbulence
-      ex=0.0
-      ex(1) = (p-2)*dt
-      ex(2) = (p-1)*dt
-      ex(3) = p*dt
+
 
       do it=1,stepIT
 
@@ -587,6 +591,8 @@ contains
     ix(1) = ex(2) + DBLE((it-2)*idt)
     ix(2) = ex(2) + DBLE((it-1)*idt)
     ix(3) = ex(2) + DBLE(it*idt)
+
+    
 
     !********************************************************
     !*                    Particle Loop                     *

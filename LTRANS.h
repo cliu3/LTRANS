@@ -51,11 +51,12 @@
 !*** TIME PARAMETERS ***
 
   REAL             :: days          ! Number of days to run the model
+  INTEGER          :: lt_start      ! LTRANS computation start time (seconds since the beginning of 1st forcing file)
   INTEGER          :: iprint        ! Print interval for LTRANS output (s); 3600 = every hour
   INTEGER          :: dt            ! External time step (duration between hydro model predictions) (s) 
   INTEGER          :: idt           ! Internal (particle tracking) time step (s)
 
-  namelist/timeparam/ days,iprint,dt,idt
+  namelist/timeparam/ days,lt_start,iprint,dt,idt
 
 
 
