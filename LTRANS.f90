@@ -143,7 +143,7 @@ contains
     ! *                              Run Model                                *
     ! *                                                                       *
     ! *************************************************************************
-    use param_mod, only: days,dt
+    use param_mod, only: days,dt,lt_start
     integer :: seconds,stepT
 
     call ini_LTRANS()
@@ -152,7 +152,7 @@ contains
 
       ! days*24*60*60 = total number of seconds to run the model
       ! divide that by dt to get the number of external time steps
-      seconds = int(days*86400.0) !Total seconds to run model
+      seconds = int(days*86400.0)+lt_start !Total seconds to run model
       stepT   = seconds/dt        !number of external time steps
 
       do p=1,stepT
