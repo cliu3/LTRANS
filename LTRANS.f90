@@ -872,11 +872,11 @@ contains
           OPEN(210,FILE='ErrorLog.txt',POSITION='APPEND')
             SELECT CASE (ele_err)
               CASE(4)
-                write(210,21) n,ix(3)
+                write(210,21) n,int(ix(3))
               CASE(5)
-                write(210,22) n,ix(3)
+                write(210,22) n,int(ix(3))
               CASE(6)
-                write(210,23) n,ix(3)
+                write(210,23) n,int(ix(3))
             END SELECT
           CLOSE(210)
           cycle
@@ -1223,7 +1223,7 @@ contains
               call setOut(n)
             endif
             OPEN(210,FILE='ErrorLog.txt',POSITION='APPEND')
-              write(210,24) n,ix(3)
+              write(210,24) n,int(ix(3))
             CLOSE(210)
             waterFlag = .TRUE.
             exit
@@ -1270,7 +1270,7 @@ contains
             call setOut(n)
           endif
           OPEN(210,FILE='ErrorLog.txt',POSITION='APPEND')
-            write(210,25) n,ix(3)
+            write(210,25) n,int(ix(3))
           CLOSE(210)
           cycle
         endif
@@ -1305,7 +1305,7 @@ contains
             call setOut(n)
           endif
           OPEN(210,FILE='ErrorLog.txt',POSITION='APPEND')
-            write(210,26) n,ix(3)
+            write(210,26) n,int(ix(3))
           CLOSE(210)
           cycle
         endif
@@ -1357,11 +1357,11 @@ contains
           OPEN(210,FILE='ErrorLog.txt',POSITION='APPEND')
             SELECT CASE (ele_err)
               CASE(1,4)
-                write(210,27) n,ix(3)
+                write(210,27) n,int(ix(3))
               CASE(2,5)
-                write(210,28) n,ix(3)
+                write(210,28) n,int(ix(3))
               CASE(3,6)
-                write(210,29) n,ix(3)
+                write(210,29) n,int(ix(3))
             END SELECT
           CLOSE(210)
           cycle
