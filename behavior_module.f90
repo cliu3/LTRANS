@@ -46,6 +46,9 @@ MODULE BEHAVIOR_MOD
 !
 ! Tidal Stream Transport: Behavior = 7.
 !
+! Simple Bonefish DVM: Behavior = 8. Particles move to 30 m at 6pm UTC and to 
+!   300 m or local bathymetry, whichever is shallower, at 6am UTC. (cliu)
+!
 !
 ! Behavior algorithms and code created by: Elizabeth North
 ! Module structure created by:             Zachary Schlag
@@ -547,6 +550,26 @@ CONTAINS
        bott = bottom(n)
     ENDIF
 
+    !TYPE 8: Bonefish simple DVM
+    IF (P_behave(n).EQ.8) THEN
+       
+       !A. Find daytime in hrs since midnight (dtime)
+       dtime = aint( (daytime - aint(daytime))*DBLE(24.0) )  !time of day 
+       !This assumes that model simulations start at midnight
+       
+       !B. Set particle depths to 300 m or local bathymetry, whichever is shallower, at 6am
+       if (dtime.EQ.6.0) then
+!          if (P_depth.GT.-300.0) then
+!            ZBehav = 1.0
+!          else
+           ZBehav = -300.0 - P_depth
+!          endif        
+       end if  
+       !C. Set particle depths to 30 m at 6pm
+       if (dtime.EQ.18.0) then
+         ZBehav = -30.0 - P_depth
+       end if  
+    ENDIF
 ! ******************* End Particle Behavior ******************************
   END SUBROUTINE behave
 

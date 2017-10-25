@@ -24,9 +24,9 @@ PGI_USGS   :=
 
 ifdef IFORT_UMCES 
   FC = ifort
-  NETCDF_INCDIR = /opt/netcdf4/ifort_gcc64/include
-  NETCDF_LIBDIR = /opt/netcdf4/ifort_gcc64/lib
-  FFLAGS = -O3 -vec-report0 -fp-model precise -I$(NETCDF_INCDIR)
+  NETCDF_INCDIR = /usr/local/netcdf4/ifort/include 
+  NETCDF_LIBDIR = /usr/local/netcdf4/ifort/lib
+  FFLAGS = -O3 -fp-model precise -I$(NETCDF_INCDIR) -Wl,-rpath,$(NETCDF_LIBDIR) #-g -traceback
 #  FFLAGS = -vec-report0 -fp-model precise -I$(NETCDF_INCDIR) -Wl,-no_pie -traceback -check bounds
 endif
 
