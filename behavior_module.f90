@@ -562,12 +562,12 @@ CONTAINS
 !          if (P_depth.GT.-300.0) then
 !            ZBehav = 1.0
 !          else
-           ZBehav = -300.0 - P_depth
+           ZBehav = -300.0 - P_zc
 !          endif        
        end if  
        !C. Set particle depths to 30 m at 6pm
        if (dtime.EQ.18.0) then
-         ZBehav = -30.0 - P_depth
+         ZBehav = -30.0 - P_zc
        end if  
     ENDIF
 ! ******************* End Particle Behavior ******************************
